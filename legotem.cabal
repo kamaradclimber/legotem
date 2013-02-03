@@ -1,0 +1,29 @@
+Name:           legotem
+Version:        0.0
+Description:    Legotem helps you be aware of all planned movies.
+License:        OtherLicense
+License-file:   LICENSE
+Author:         kamaradclimber
+Maintainer:     kamaradclimber (at google's free email provider aka gmail.com)
+Build-Type:     Simple
+Cabal-Version:  >=1.2
+
+Library
+  Exposed-modules:
+  Build-depends:
+    imm >= 0.4.1.0,
+    mtl,
+    HTTP,
+    network,
+    text,
+    aeson,
+    bytestring,
+    unix,
+    xdg-basedir,
+    time,
+    old-locale
+
+Executable legotem
+  Main-is:          Legotem.hs
+  Build-Depends:    base
+  Ghc-options: -Wall -threaded 

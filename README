@@ -1,0 +1,6 @@
+Legotem is a simple tool that I built to be aware of new movies.
+It will simply use allocine api to fetch all movie that will be
+released along with some information and then expose them as a 
+RSS feed.
+RSS can then be parsed by any tool you want. 
+I use imm to do that.
