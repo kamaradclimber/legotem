@@ -11,17 +11,20 @@ Cabal-Version:  >=1.2
 Library
   Exposed-modules:
   Build-depends:
-    imm >= 0.4.1.0,
-    mtl,
-    HTTP,
-    network,
-    text,
     aeson,
     bytestring,
+    feed,
+    HTTP,
+    imm >= 0.4.1.0,
+    mtl,
+    network,
+    old-locale,
+    text,
+    time,
+    timerep,
     unix,
     xdg-basedir,
-    time,
-    old-locale
+    xml
 
 Executable legotem
   Main-is:          Legotem.hs

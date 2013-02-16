@@ -1,13 +1,15 @@
-{-# LANGUAGE FlexibleContexts, RankNTypes, OverloadedStrings #-}
+{-# LANGUAGE FlexibleContexts, RankNTypes, OverloadedStrings, DeriveGeneric #-}
 module Legotem.Types where
 
-import Network.URI
-import Network.HTTP
-import Data.Aeson
 import Control.Applicative ((<$>), (<*>))
 import Control.Monad
-import qualified Data.ByteString.Lazy.Char8 as BS
-import Data.ByteString.Lazy.Char8
+import Data.Aeson
+import Data.ByteString.Lazy.Char8()
+import Data.List
+import GHC.Generics (Generic)
+import Network.HTTP()
+import Network.URI()
+import qualified Data.ByteString.Lazy.Char8 as BS()
 
 data AllocineResponse = AllocineResponse {
   feed :: AllocineFeed
@@ -33,22 +35,54 @@ instance FromJSON AllocineFeed where
 
 data Movie = Movie {
   title :: String,
-  release :: Release
-} deriving (Show, Eq)
+  release :: Release,
+  id :: Int,
+  synopsis :: String,
+  trailer :: Trailer,
+  links :: [Link]
+} deriving (Eq, Ord, Show)
+
 
 instance FromJSON Movie where
   parseJSON (Object v) =
     Movie <$>
     (v .: "title")     <*>
-    (v .: "release")
+    (v .: "release")   <*>
+    (v .: "code")      <*>
+    (v .: "synopsisShort") <*>
+    (v .: "trailer")       <*>
+    (v .: "link")
   parseJSON _ = mzero
 
 data Release = Release {
   date :: String
-} deriving (Show, Eq)
+} deriving (Show, Eq, Ord)
 
 instance FromJSON Release where
   parseJSON (Object v) = 
     Release <$>
     (v .: "releaseDate")
   parseJSON _ = mzero
+
+data Trailer = Trailer {
+  code :: Int,
+  uri :: String
+} deriving (Eq, Show, Ord)
+
+
+instance FromJSON Trailer where
+  parseJSON (Object v) = 
+    Trailer <$>
+    (v .: "code") <*>
+    (v .: "href") 
+  parseJSON _ = mzero
+
+data Link = Link {
+  rel ::String,
+  name :: String,
+  href :: String
+} deriving (Show, Eq, Ord, Generic)
+
+instance FromJSON Link
+
+
