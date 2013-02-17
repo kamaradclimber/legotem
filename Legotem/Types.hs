@@ -8,8 +8,18 @@ import Data.ByteString.Lazy.Char8()
 import Data.List
 import GHC.Generics (Generic)
 import Network.HTTP()
-import Network.URI()
+import Network.URI
 import qualified Data.ByteString.Lazy.Char8 as BS()
+import Data.Default
+
+
+data Options = Options {
+  limit :: Int,
+  url   :: Maybe URI,
+  help  :: Bool,
+  output :: String
+} deriving (Show)
+
 
 data AllocineResponse = AllocineResponse {
   feed :: AllocineFeed

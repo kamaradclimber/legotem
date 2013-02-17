@@ -3,12 +3,12 @@ module Legotem.Tambouille where
 
 import Legotem.Types
 
+
 import Data.Aeson
 import Data.ByteString.Lazy.Char8 (pack)
 import Data.Char
 import Data.List
 import Data.Maybe
-
 import Data.Time.Clock.POSIX
 import Data.Time.Format
 import Data.Time.LocalTime
@@ -29,12 +29,11 @@ download uri = do
   resp <- simpleHTTP ( defaultGETRequest uri)
   getResponseBody resp
 
-blop :: IO String -> IO ()
-blop is = do
+blop :: Options -> IO String -> IO ()
+blop o is = do
   s <- is
   ordered <-  maybe (return []) createOrderedMovie (decode $ pack s  :: Maybe AllocineResponse)
-  print $ map (show.  snd) ordered
-  writeFile "./test" $ ppTopElement $ xmlFeed $ releaseFeed ordered
+  writeFile (output o) $ ppTopElement $ xmlFeed $ releaseFeed ordered
 
 
 releaseFeed :: [(ZonedTime, Movie)] -> Feed
@@ -120,7 +119,7 @@ pp m = intercalate "<br/>" $ map ($ m) ppMovie
 ppMovie :: [Movie -> String]
 ppMovie = [
    title
-  , date . release
+  , \m -> "Sortie: " ++ (date $ release m)
   , uri . trailer
   , synopsis
   , \m -> "Link: " ++ show (movieLink m)

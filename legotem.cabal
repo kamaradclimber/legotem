@@ -13,6 +13,7 @@ Library
   Build-depends:
     aeson,
     bytestring,
+    data-default,
     feed,
     HTTP,
     imm >= 0.4.1.0,
