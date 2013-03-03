@@ -16,7 +16,7 @@ Library
     data-default,
     feed,
     HTTP,
-    imm >= 0.4.1.0,
+    imm >= 0.5.0.0,
     mtl,
     network,
     old-locale,
